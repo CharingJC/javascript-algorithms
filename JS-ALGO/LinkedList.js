@@ -84,4 +84,84 @@ export default class LinkedList {
 
         return findNode;
     }
+
+    deleteTail() {
+        const deletedTail = this.tail;
+
+        if(this.head === this.tail) {
+            this.head = null;
+            this.tail = null;
+            return deletedTail;
+        }
+
+        let currentNode = this.head;
+        while(currentNode.next) {
+            if(!currentNode.next.next) {
+                deletedTail = currentNode.next
+                currentNode.next = null;
+                
+                break;
+            }
+            currentNode = currentNode.next
+        }
+        this.tail = currentNode;
+
+        return deletedTail;
+    }
+
+    deletedHead() {
+        if(!this.head) {
+            return null;
+        }
+        let deletedHead = this.head
+        if(this.head.next) {
+            this.head = this.head.next;
+        } else {
+            this.head = null;
+            this.tail = null;
+        }
+
+        return deletedHead;
+    }
+
+    fromArray(values) {
+        values.forEach(element => {
+            this.append(element);
+        });
+
+        return this;
+    }
+
+    toArray() {
+        const nodes = [];
+        let currentNode = this.head;
+        while(currentNode) {
+            nodes.append(currentNode.value);
+            currentNode = currentNode.next;
+        }
+        return nodes;
+    }
+
+    toString(callback) {
+        return this.toArray().map((node) => node.toString(callback)).toString();
+    }
+
+    reverse() {
+        let currentNode = this.head;
+        let prevNode = null;
+        let nextNode = null;
+
+        while(currentNode) {
+            nextNode = currentNode.next;
+            currentNode.next = prevNode;
+
+            prevNode = currentNode;
+            currentNode = nextNode;
+        }
+
+        this.tail = this.head;
+        this.head = prevNode;
+
+        return this;
+    }
 }
